@@ -1,0 +1,110 @@
+config-1-attributes:
+  value: 345                          #对应单个值
+  valueArray: 1,2,3,4,5,6,7,8,9      #对应数组
+  valueList:                         #对应list
+    -13579
+    -246810
+  valueMap:                          #对应map
+    name: lili
+    age: 20
+    sex: 男
+  valueMapList:                      #对应list<map>
+    - name: bob
+      age: 21
+    - name: caven
+      age: 31
+
+props:
+
+  Keyword:
+     bankTax: 协议扣税|缴税|代理国库税收收缴|税款
+       
+     bankFee: 手续费|收费项目|短信服务费|收费|网银服务费|对账单打印收费|回单服务费|企业网银年费|费用2218|对公收费|网银费用|业务收费|银行费用
+
+     bankSecurity: 社保|社会保险|社保费|社保金
+
+     bankSalary: 工资|发放工资|奖金|薪金|薪酬
+     
+     bankHPFund: 公积金|住房公积金
+       
+     bankExpense: 报销|报销费用
+     
+     bankInterest: 结息|利息|账户结息
+     
+     bankVATAndAdditionalTax: 增值税及附加税
+     
+     bankVAT: 增值税
+     
+     bankAdditionanlTax: 附加税
+     
+     bankIncomeTax: 企业所得税
+     
+     bankPersonalTax: 个人所得税
+     
+     bankPayMentForGood: 货款
+
+     bankReceivePayment: 货款
+              
+  companies:
+     YYKJ: 
+        name: 深圳市宜源科技有限公司
+        cost: 140501
+        cj: 222108
+        jyf: 222113
+        dfjyf: 222114
+        yfgz: 221101
+        bankFee: 560303
+        DefaultVTARate: 0.13
+        personSecurityAmout: 5156
+        defChargePerson: 张宗兵
+     AOKJ: 
+        name: 深圳市安欧科技有限公司 
+        cost: 520201
+        cj: 222103
+        jyf: 222104
+        dfjyf: 222105
+        yfgz: 221101
+        bankFee: 560303
+        DefaultVTARate: 0.06
+        personSecurityAmout: 214
+        defChargePerson: 涂建华     
+     CBKJ: 
+        name: 深圳车吧科技有限公司 
+        cost: 5401
+        inventor: 420101
+        cj: 222103
+        jyf: 222104
+        dfjyf: 222105
+        yfgz: 221101
+        bankFee: 560303
+        DefaultVTARate: 0.06
+        personSecurityAmout: 214
+        defChargePerson: 涂建华
+     CHKJ: 
+        name: 深圳市创和技术有限公司 
+        cost: 540101
+        inventory: 140501
+        cj: 222108
+        jyf: 222113
+        yfgz: 221101
+        dfjyf: 222114
+        bankFee: 560303
+        DefaultVTARate: 0.13
+        personSecurityAmout: 421
+        defChargePerson: 郑茂
+        
+     TADKJ: 
+        name: 深圳市泰安达电子有限公司 
+        cost: 540101
+        inventory: 140501
+        cj: 222108
+        jyf: 222113
+        yfgz: 221101
+        dfjyf: 222114
+        bankFee: 560303
+        DefaultVTARate: 0.13
+        personSecurityAmout: 421
+        defChargePerson: 徐邵武   
+
+        
+      
