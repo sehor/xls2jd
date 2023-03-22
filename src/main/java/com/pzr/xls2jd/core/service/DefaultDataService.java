@@ -2,6 +2,7 @@ package com.pzr.xls2jd.core.service;
 
 import com.pzr.xls2jd.core.domain.RawInfo;
 import com.pzr.xls2jd.core.domain.CompanyProperties;
+import com.pzr.xls2jd.core.domain.TypeEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -45,8 +46,9 @@ public class DefaultDataService implements ProcessorService {
 
     @Override
     public boolean needToBeMerged(RawInfo origin) {
-        // TODO Auto-generated method stub
-        return true;
+
+        return !origin.getType().equals(TypeEnum.Bank_Pay_Tax.value) ||
+                !origin.getType().equals("Not_Found");  //未确定的和缴税业务不用合并（比如所得税，增值税不能合并处理）
     }
 
     @Override
@@ -70,7 +72,7 @@ public class DefaultDataService implements ProcessorService {
                 .and("type").regex("Bank"));
         double sum = 0;
         for (RawInfo rawInfo : operations.find(query, RawInfo.class)) {
-            String text = rawInfo.getBank_brief1() + rawInfo.getBank_brief1();
+            String text = rawInfo.getBank_brief1() + rawInfo.getBank_brief2();
             if (isContainKeyWord(text, "bankSalary")) {
                 sum += rawInfo.getBank_pay();
             }

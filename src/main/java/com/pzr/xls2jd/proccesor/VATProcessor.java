@@ -29,9 +29,10 @@ public class VATProcessor implements Processor{
 
     public List<AccountEntry> processToRecord(List<RawInfo> origins,String companyName) {
 
+        System.out.println(origins);
         AccountEntry entry_vat=new AccountEntry();
         List<Record> records = new ArrayList<>();
-        if (origins.size() <= 0)
+        if (origins.size() == 0)
             return List.of();
 
 

@@ -24,17 +24,28 @@ import java.util.Map;
  **/
 public class Reader {
 
-    public static <T> List<T> readFromExcel(Class clzz,File file, String sheetName, int headRow, int starRow)  {
-         InputStream input = null;
+    public static <T> List<T> readFromExcel(Class clzz,InputStream input, String sheetName, int headRow, int starRow,String type)  {
+
          Workbook workbook = null;
          Field[] fields= ExcelUtil.getFullFields(clzz);
          List<T> ans = new ArrayList<>();
 
          try {
-              input = new FileInputStream(file);
-              workbook = file.getName().toLowerCase().endsWith("xlsx") ? new XSSFWorkbook(input)
+
+              workbook = type.toLowerCase().endsWith("xlsx") ? new XSSFWorkbook(input)
                      : new HSSFWorkbook(input);
              Sheet sheet=workbook.getSheet(sheetName);
+             if(sheet==null){
+                 for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
+                     if (workbook.getSheetAt(i).getSheetName().contains(sheetName)) {
+                         sheet=workbook.getSheetAt(i);
+                         break;
+                     }
+                 }
+             }
+             if(sheet==null){
+                 sheet = workbook.getSheetAt(0);
+             }
              Row titleRow=sheet.getRow(headRow);
 
              Map<Integer, Field> map = new HashMap<>();
@@ -46,7 +57,7 @@ public class Reader {
                      }
                  }
              }
-
+             //System.out.println(sheet.getLastRowNum());
              for (int i = starRow; i <=sheet.getLastRowNum() ; i++) {
                  Row row = sheet.getRow(i);
                  if(row==null){
@@ -58,7 +69,7 @@ public class Reader {
                      if (cell != null) {
 
                          String cellValue = ExcelUtil.getCellValueByCell(cell);
-                         ExcelUtil.setFieldsValue(t, entry.getValue(), cellValue);
+                         ExcelUtil.setFieldValue(t, entry.getValue(), cellValue);
                      }
                  }
                  ans.add(t);
@@ -86,25 +97,33 @@ public class Reader {
          return ans;
      }
 
+    public static <T> List<T> readFromExcel(Class clzz,File file, String sheetName, int headRow, int starRow)  {
+        try {
+            String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1);
+            return readFromExcel(clzz,new FileInputStream(file),sheetName,headRow,starRow,suffix);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-     private static Map<Field, Integer> creatMap(Field[] fields,List<String> sheetHeads){
-         Map<String, Integer> headsMap = new HashMap<>();
-         for (int i = 0; i < sheetHeads.size(); i++) {
-              headsMap.put(sheetHeads.get(i),i);
-         }
-         Map<Field, Integer> map = new HashMap<>();
 
+
+     private static Map<Integer, Field> creatMap(Field[] fields,List<String> sheetHeads,Map<String,String> fieldsToSheetTitle){
+         HashMap<Integer, Field> map = new HashMap<>();
          for (Field field : fields) {
-             if (headsMap.containsKey(field.getName())) {
-                 map.put(field, headsMap.get(field.getName()));
-                 System.out.println("head name: " + field.getName() + " is match.");
+             int index = sheetHeads.indexOf(field.getName());
+             if (index > -1) {
+                 map.put(index, field);
              }
          }
          return map;
      }
 
 
+    public static void main(String[] args) {
 
+    }
 
 
 }

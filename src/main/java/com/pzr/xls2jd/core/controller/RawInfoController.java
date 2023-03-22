@@ -25,11 +25,11 @@ public class RawInfoController {
 
     @GetMapping("/fromFile")
     public List<RawInfo> fromFile(@RequestParam("companyName") String companyName,
-                                  @RequestParam("sheetName")String sheetName,
+                                  @RequestParam("type")String type,
                                   @RequestParam("startRow") int startRow){
         String dir= GlobalVarials.FINANCE_DIR +companyName+"\\";
-        String fileName=companyName+"_origin.xlsx";
-        List<RawInfo> rawInfos = rawInfoService.getFromFile(companyName, dir + fileName, sheetName, 0, startRow - 1);
+        String fileName="RAWINFO"+"_"+type+".xlsx";
+        List<RawInfo> rawInfos = rawInfoService.getFromFile(companyName, dir + fileName, type, 0, startRow - 1);
         rawInfoService.saveToDB(rawInfos);
         return rawInfos;
 

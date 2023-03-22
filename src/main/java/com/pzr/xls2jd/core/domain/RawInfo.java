@@ -1,6 +1,7 @@
 package com.pzr.xls2jd.core.domain;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 /**
@@ -9,7 +10,7 @@ import java.time.LocalDate;
  * @Description:
  **/
 public class RawInfo {
-    private static final long serialVersionUID = 1L;
+
 
     private String serial_number;
 
@@ -64,7 +65,7 @@ public class RawInfo {
     }
 
     public void setBill_income(Double bill_income) {
-        this.bill_income = new BigDecimal(bill_income).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        this.bill_income = new BigDecimal(bill_income).setScale(2, RoundingMode.HALF_UP).doubleValue();
 
     }
 
@@ -73,7 +74,7 @@ public class RawInfo {
     }
 
     public void setBill_pay(Double bill_pay) {
-        this.bill_pay = new BigDecimal(bill_pay).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        this.bill_pay = new BigDecimal(bill_pay).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     public String getInvoice_number() {
@@ -96,9 +97,9 @@ public class RawInfo {
         return invoice_amount;
     }
 
-    @SuppressWarnings("deprecation")
+
     public void setInvoice_amount(Double invoice_amount) {
-        this.invoice_amount = new BigDecimal(invoice_amount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        this.invoice_amount = new BigDecimal(invoice_amount).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     public Double getInvoice_tax() {
@@ -106,7 +107,7 @@ public class RawInfo {
     }
 
     public void setInvoice_tax(Double invoice_tax) {
-        this.invoice_tax = new BigDecimal(invoice_tax).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        this.invoice_tax = new BigDecimal(invoice_tax).setScale(2, RoundingMode.HALF_UP).doubleValue();
         ;
     }
 
@@ -123,7 +124,7 @@ public class RawInfo {
     }
 
     public void setSalary_payable(Double salary_payable) {
-        this.salary_payable = new BigDecimal(salary_payable).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        this.salary_payable = new BigDecimal(salary_payable).setScale(2, RoundingMode.HALF_UP).doubleValue();
         ;
     }
 
@@ -132,7 +133,7 @@ public class RawInfo {
     }
 
     public void setBasicSalary(Double basicSalary) {
-        this.basicSalary = new BigDecimal(basicSalary).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        this.basicSalary = new BigDecimal(basicSalary).setScale(2, RoundingMode.HALF_UP).doubleValue();
         ;
     }
 
@@ -141,7 +142,7 @@ public class RawInfo {
     }
 
     public void setSalary_other(Double salary_other) {
-        this.salary_other = new BigDecimal(salary_other).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        this.salary_other = new BigDecimal(salary_other).setScale(2, RoundingMode.HALF_UP).doubleValue();
         ;
     }
 
@@ -150,7 +151,7 @@ public class RawInfo {
     }
 
     public void setSalary_security(Double salary_security) {
-        this.salary_security = new BigDecimal(salary_security).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        this.salary_security = new BigDecimal(salary_security).setScale(2, RoundingMode.HALF_UP).doubleValue();
         ;
     }
 
@@ -159,7 +160,7 @@ public class RawInfo {
     }
 
     public void setSalary_funds(Double salary_funds) {
-        this.salary_funds = new BigDecimal(salary_funds).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        this.salary_funds = new BigDecimal(salary_funds).setScale(2, RoundingMode.HALF_UP).doubleValue();
         ;
     }
 
@@ -168,7 +169,7 @@ public class RawInfo {
     }
 
     public void setSalary_personTax(Double salary_personTax) {
-        this.salary_personTax = new BigDecimal(salary_personTax).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        this.salary_personTax = new BigDecimal(salary_personTax).setScale(2, RoundingMode.HALF_UP).doubleValue();
         ;
     }
 
@@ -209,7 +210,7 @@ public class RawInfo {
     }
 
     public void setAmout(Double amout) {
-        this.amout = new BigDecimal(amout).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        this.amout = new BigDecimal(amout).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     public Double getBank_income() {
@@ -217,7 +218,7 @@ public class RawInfo {
     }
 
     public void setBank_income(Double bank_income) {
-        this.bank_income = new BigDecimal(bank_income).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        this.bank_income = new BigDecimal(bank_income).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     public Double getBank_pay() {
@@ -225,7 +226,7 @@ public class RawInfo {
     }
 
     public void setBank_pay(Double bank_pay) {
-        this.bank_pay = new BigDecimal(bank_pay).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        this.bank_pay = new BigDecimal(bank_pay).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     public String getRelative_account() {
@@ -272,9 +273,9 @@ public class RawInfo {
         return payedPersonSecurity;
     }
 
-    @SuppressWarnings("deprecation")
+
     public void setPayedPersonSecurity(Double payedPersonSecurity) {
-        this.payedPersonSecurity = new BigDecimal(payedPersonSecurity).setScale(2, BigDecimal.ROUND_HALF_UP)
+        this.payedPersonSecurity = new BigDecimal(payedPersonSecurity).setScale(2, RoundingMode.HALF_UP)
                 .doubleValue();
     }
 
@@ -282,9 +283,9 @@ public class RawInfo {
         return payedCompanySecurity;
     }
 
-    @SuppressWarnings("deprecation")
+
     public void setPayedCompanySecurity(Double payedCompanySecurity) {
-        this.payedCompanySecurity = new BigDecimal(payedCompanySecurity).setScale(2, BigDecimal.ROUND_HALF_UP)
+        this.payedCompanySecurity = new BigDecimal(payedCompanySecurity).setScale(2, RoundingMode.HALF_UP)
                 .doubleValue();
     }
 

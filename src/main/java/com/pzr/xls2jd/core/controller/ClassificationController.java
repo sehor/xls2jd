@@ -1,5 +1,6 @@
 package com.pzr.xls2jd.core.controller;
 
+import com.pzr.xls2jd.common.GlobalVarials;
 import com.pzr.xls2jd.core.domain.Classification;
 import com.pzr.xls2jd.proccesor.ProcessorProvider;
 import com.pzr.xls2jd.core.service.ClassificationService;
@@ -27,7 +28,7 @@ public class ClassificationController {
 
     @GetMapping("/readFromFile")
     public List<Classification> readFromFile(@PathParam("companyName") String companyName){
-        String filePath="D:/work/finace/"+companyName+"/"+companyName+"_科目列表.xls";
+        String filePath= GlobalVarials.FINANCE_DIR +companyName+"/"+companyName+"_科目列表.xls";
         File file=new File(filePath);
 
         return classificationService.readFromExcel(file, companyName,true);

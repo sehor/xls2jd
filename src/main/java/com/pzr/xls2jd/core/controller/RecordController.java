@@ -34,7 +34,7 @@ public class RecordController {
 
         List<Record> records = recordService.creatRecordsWithRawInfoFromMongo(companyName, type, begin, end);
         String path=GlobalVarials.FINANCE_DIR+companyName+"\\";
-        String fileName=type+"_"+begin.getMonth()+".xls";
+        String fileName="RECORD"+"_"+type+".xls";
         File file=new File(path+fileName);
         if(!file.exists()){
             try {

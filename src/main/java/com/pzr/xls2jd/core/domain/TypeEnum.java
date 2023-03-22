@@ -19,6 +19,10 @@ public enum TypeEnum {
     Bank_Pay_Receivable(116,"Bank_Pay_Receivable"),
     BanK_DefChargePerson(117,"Bank_Pay_DefChargePersion"),Bank_Pay_Housing_Provident_Fund(118,"Bank_Pay_Housing_Provident_Fund"),
     Bank_Tranfer_Interal(119,"Bank_Tranfer_Interal"),
+    Bank_Pay_NotFound(900,"Not_Pay_Found"),
+    Bank_Income_NotFound(901,"Not_Income_Found"),
+
+
     Issue_Invoice(200, "Issue_Invoice"), Receive_Invoice(300, "Receive_Invoice"), Handle_VTA(400, "Handle_VTA"),
     Accrued_SalaryAndSecurity(500, "Accrued_SalaryAndSecurity"),
 

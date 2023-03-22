@@ -34,7 +34,7 @@ public class BankProcessor implements Processor {
         for (RawInfo origin : bankInfos) {
 
             origin.setAmout(origin.getBank_income() + origin.getBank_pay());
-            origin.setBrief(origin.getBank_brief1() + " " + origin.getBank_brief2());
+            origin.setBrief(origin.getBank_brief1() + " " + origin.getBank_brief2()+" "+origin.getBrief());
             System.out.println(companyName);
 
             // 公司银行间转账(不是结息)
@@ -100,8 +100,8 @@ public class BankProcessor implements Processor {
                 }
                 else {
 
-                    origin.setType(TypeEnum.Bank_Income_Other.value);
-                    origin.setRelative_account_number(!其他应收款_其他.equals("未找到") ? 其他应收款_其他 : 其他应付款_其他);
+                    origin.setType(TypeEnum.Bank_Income_NotFound.value);
+                    origin.setRelative_account_number(TypeEnum.Bank_Income_NotFound.value+": "+origin.getRelative_account());
 
                 }
             }
@@ -121,7 +121,7 @@ public class BankProcessor implements Processor {
                 //货款，没录入的供应商
                 else if (service.isContainKeyWord(origin.getBrief(), BriefKeyWord.BanK_Payment_For_Good.val)||origin.getBrief().contains("货")) {
                     origin.setType(TypeEnum.Bank_Pay_Payable.value);
-                    origin.setRelative_account_number("未找到");
+                    origin.setRelative_account_number("未找到: "+origin.getRelative_account());
                 }
                 else if (service.isContainKeyWord(origin.getBrief(), BriefKeyWord.Bank_Salary.val)) { // 发放工资
                     origin.setRelative_account("应付职工薪酬-应付工资");
@@ -158,10 +158,8 @@ public class BankProcessor implements Processor {
                     origin.setRelative_account_number(其他应收款的科目);
                 }
                  else {
-
-                    origin.setType(TypeEnum.Bank_Pay_Other.value);
-                    origin.setRelative_account_number(!其他应付款_其他.equals("未找到") ? 其他应付款_其他 : 其他应收款_其他);
-
+                    origin.setType(TypeEnum.Bank_Pay_NotFound.value);
+                    origin.setRelative_account_number(TypeEnum.Bank_Pay_NotFound.value+": "+origin.getRelative_account());
                 }
             }
         }

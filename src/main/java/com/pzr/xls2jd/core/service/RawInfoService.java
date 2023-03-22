@@ -30,7 +30,7 @@ public class RawInfoService {
             return List.of();
         }
         String bankNum=sheetName.replaceAll("\\D+","");
-        String type=sheetName.replaceAll("\\d+","");
+        String type=sheetName.replaceAll("_\\d+","");
         List<RawInfo> list = Reader.readFromExcel(RawInfo.class, file, sheetName, headRow, starRow);
         list.forEach(r->{
             r.setCompanyName(companyName);

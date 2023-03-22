@@ -3,6 +3,7 @@ package com.pzr.xls2jd.core.service;
 import com.pzr.xls2jd.core.domain.AccountEntry;
 import com.pzr.xls2jd.core.domain.RawInfo;
 import com.pzr.xls2jd.core.domain.Record;
+import com.pzr.xls2jd.core.domain.TypeEnum;
 import com.pzr.xls2jd.excelTool.Writer;
 import com.pzr.xls2jd.proccesor.Processor;
 import com.pzr.xls2jd.proccesor.ProcessorProvider;
@@ -35,6 +36,11 @@ public class RecordService {
         if(processor==null){
             System.out.println("no such type processor: " + type);
             return List.of();
+        }
+
+        //结转成本费用，使用Issue_Invoice的RawInfo
+        if (TypeEnum.SoldToCost.value.equals(type)) {
+            type=TypeEnum.Issue_Invoice.value;
         }
         List<RawInfo> rawInfos = rawInfoService.findByPeriodAndTye(companyName, type, begin, end);
         List<AccountEntry> accountEntries = new ArrayList<>();

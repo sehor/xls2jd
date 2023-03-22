@@ -5,15 +5,11 @@ import org.apache.xmlbeans.impl.regex.ParseException;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /**
  * @Author pzr
@@ -68,7 +64,12 @@ public class ExcelUtil {
                 ;
                 break;
             case FORMULA: // 公式
-                cellValue = cell.getCellFormula();
+                cellValue = switch (cell.getCachedFormulaResultType()) {
+                    case NUMERIC -> cell.getNumericCellValue() + "";
+                    case STRING -> cell.getStringCellValue();
+                    case BOOLEAN -> cell.getBooleanCellValue() + "";
+                    default -> "";
+                };
                 break;
             case BLANK: // 空值
                 cellValue = "";
@@ -83,12 +84,12 @@ public class ExcelUtil {
         return cellValue;
     }
 
-    public static void setFieldsValue(Object t, Field field, String value) {
-        setFieldsValue(t, field, value, 2);
+    public static void setFieldValue(Object t, Field field, String value) {
+        ExcelUtil.setFieldValue(t, field, value, 2);
     }
 
-    @SuppressWarnings("deprecation")
-    public static void setFieldsValue(Object t, Field field, String value, int digit) {
+
+    public static void setFieldValue(Object t, Field field, String value, int digit) {
 
         field.setAccessible(true);
         //System.out.println("set field value: "+value);
@@ -112,14 +113,14 @@ public class ExcelUtil {
                 if (value.isEmpty()) {
                     field.set(t, 0.00F);
                 } else
-                    field.set(t, new BigDecimal(value).setScale(digit, BigDecimal.ROUND_HALF_UP).floatValue());
+                    field.set(t, new BigDecimal(value).setScale(digit, RoundingMode.HALF_UP).floatValue());
             }
             else if (field.getType() == Double.class || field.getType() == double.class) {
                 if (value.isEmpty()) {
                     field.set(t, 0.00D);
                 } else {
 
-                    field.set(t, new BigDecimal(value).setScale(digit, BigDecimal.ROUND_HALF_UP).doubleValue());
+                    field.set(t, new BigDecimal(value).setScale(digit, RoundingMode.HALF_UP).doubleValue());
                 }
 
             }
@@ -148,7 +149,7 @@ public class ExcelUtil {
                                 field.set(t, LocalDate.parse(value.substring(0, "yyyy/MM/dd".length()),
                                         DateTimeFormatter.ofPattern("yyyy/MM/dd")));
                             }catch(Exception date_e2) {
-                                field.set(t,LocalDate.of(1970, 01, 01));
+                                field.set(t,LocalDate.of(1970, 1, 1));
                             }
 
                         }
@@ -169,23 +170,6 @@ public class ExcelUtil {
         }
     }
 
-    @SuppressWarnings("deprecation")
-    public static double set2Dig(double d) {
-        return new BigDecimal(d).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-    }
-
-    @SuppressWarnings("deprecation")
-    public static float set2Dig(float f) {
-        return new BigDecimal(f).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
-
-    }
-
-    public static <T> List<T> filter(List<T> list, Predicate<T> predicate) {
-        if (list.size() < 1)
-            return List.of();
-        list = list.stream().filter(predicate).collect(Collectors.toList());
-        return list;
-    }
 
     public static void writeFieldValueToCell(Object o,Field field,Cell cell) {
 
@@ -266,10 +250,6 @@ public class ExcelUtil {
                 String currentStr= ExcelUtil.getCellValueByCell(row.getCell(2))+
                         ExcelUtil.getCellValueByCell(row.getCell(0));
 
-                System.out.println(preStr);
-                System.out.println("vs");
-                System.out.println(currentStr);
-
                 if(!preStr.equals(currentStr)) {
                     paint = !paint;
                 }
@@ -304,4 +284,15 @@ public class ExcelUtil {
         return fields;
     }
 
+    public static void setObjectFields(Object o, Map<String,Integer> fieldNameToColumnIndex,Row row){
+        for (Field field : o.getClass().getDeclaredFields()) {
+            if(!fieldNameToColumnIndex.containsKey(field.getName())){
+                continue;
+            }
+            int columnIndex=fieldNameToColumnIndex.get(field.getName());
+            String cellValue=ExcelUtil.getCellValueByCell(row.getCell(columnIndex));
+            ExcelUtil.setFieldValue(o, field, cellValue, 4);
+        }
+    }
+    
 }

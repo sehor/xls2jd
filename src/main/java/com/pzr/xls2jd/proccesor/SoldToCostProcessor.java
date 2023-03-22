@@ -1,11 +1,9 @@
 package com.pzr.xls2jd.proccesor;
 
 import com.pzr.xls2jd.core.domain.AccountEntry;
+import com.pzr.xls2jd.core.domain.AccountPeriod;
 import com.pzr.xls2jd.core.domain.RawInfo;
 import com.pzr.xls2jd.core.domain.Record;
-import com.pzr.xls2jd.core.util.Util;
-import com.pzr.xls2jd.core.domain.AccountPeriod;
-import com.pzr.xls2jd.core.domain.TypeEnum;
 import com.pzr.xls2jd.core.service.ProcessorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +20,7 @@ public class SoldToCostProcessor implements Processor{
 
 	public List<RawInfo> preProcess(List<RawInfo> origins,String companyName) {
 
-		return Util.filter(origins, e->e.getType().contains(TypeEnum.Issue_Invoice.value));
+		return origins;
 	}
 
 	public List<AccountEntry> processToRecord(List<RawInfo> origins, String companyName) {
